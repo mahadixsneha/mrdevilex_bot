@@ -1,0 +1,39 @@
+# ⚡ CHALLENGE BY MRDEVILEX — Render Compatible (No pydantic/Rust)
+
+# Core Bot
+python-telegram-bot[job-queue]==21.6
+
+# Database
+pymongo==4.6.3
+motor==3.3.2
+dnspython==2.4.2
+
+# Web (Flask - no pydantic needed!)
+flask==3.0.3
+uvicorn==0.29.0
+asgiref==3.8.1
+
+# Auth
+PyJWT==2.8.0
+passlib==1.7.4
+bcrypt==4.0.1
+
+# Config
+python-dotenv==1.0.1
+
+# Scheduler
+APScheduler==3.10.4
+
+# NLP
+better-profanity==0.7.0
+langdetect==1.0.9
+
+# Utils
+pytz==2024.1
+
+# Logging
+loguru==0.7.2
+rich==13.7.1
+
+# Jinja2 (Flask এর সাথে আসে, তবে pin করি)
+jinja2==3.1.4

@@ -1,0 +1,72 @@
+# ╔══════════════════════════════════════════╗
+# ║   Render Deployment — MrDevilEx Bot     ║
+# ╚══════════════════════════════════════════╝
+
+services:
+  - type: web
+    name: mrdevilex-telegram-bot
+    runtime: python
+    region: singapore          # Asia-র কাছের region
+    plan: free                 # Free plan (upgrade করলে faster)
+
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+
+    # Health check — Render এটা দিয়ে জানবে bot চলছে কিনা
+    healthCheckPath: /health
+
+    # Environment variables (Render dashboard থেকে set করুন)
+    envVars:
+      - key: RENDER
+        value: "true"
+
+      # ── Required ───────────────────────────────────────
+      - key: BOT_TOKEN
+        sync: false          # Dashboard থেকে manually দিতে হবে
+
+      - key: OWNER_ID
+        sync: false
+
+      - key: MONGO_URI
+        sync: false          # MongoDB Atlas connection string
+
+      # ── Auto-set by Render ─────────────────────────────
+      - key: WEBHOOK_URL
+        fromService:
+          type: web
+          name: mrdevilex-telegram-bot
+          property: host     # Render automatically দেবে: https://xxx.onrender.com
+
+      - key: PORT
+        fromService:
+          type: web
+          name: mrdevilex-telegram-bot
+          property: port
+
+      # ── Optional but recommended ───────────────────────
+      - key: MONGO_DB_NAME
+        value: telegram_bot
+
+      - key: LOG_CHANNEL_ID
+        sync: false
+
+      - key: SECRET_KEY
+        generateValue: true  # Auto generate করবে
+
+      - key: API_ADMIN_USERNAME
+        value: admin
+
+      - key: API_ADMIN_PASSWORD
+        sync: false
+
+      - key: ENABLE_AI_MODERATION
+        value: "true"
+
+      - key: DEFAULT_LANGUAGE
+        value: en
+
+      - key: PREMIUM_DURATION_DAYS
+        value: "30"
+
+      - key: WARN_LIMIT
+        value: "3"
